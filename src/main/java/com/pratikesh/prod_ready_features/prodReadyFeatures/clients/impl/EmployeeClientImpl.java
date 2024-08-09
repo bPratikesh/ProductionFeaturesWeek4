@@ -7,6 +7,7 @@ import com.pratikesh.prod_ready_features.prodReadyFeatures.exceptions.ResourceNo
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -53,17 +54,17 @@ public class EmployeeClientImpl implements EmployeeClient {
     public EmployeeDTO createNewEmployee(EmployeeDTO employeeDTO) {
         try{
 
-            ApiResponse<EmployeeDTO> newEmpResponse = restClient.post()
+            ResponseEntity<ApiResponse<EmployeeDTO>> newEmpResponse = restClient.post()
                     .uri("emp")
                     .body(employeeDTO)
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, (req, res) ->{
                         throw new ResourceNotFoundException("Could not create employee");
                     })
-                    .body(new ParameterizedTypeReference<>() {
+                    .toEntity(new ParameterizedTypeReference<>() {
                     });
 
-            return newEmpResponse.getData();
+            return newEmpResponse.getBody().getData();
         }
         catch (Exception e){
             throw new RuntimeException(e);
