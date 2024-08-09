@@ -1,9 +1,6 @@
 package com.pratikesh.prod_ready_features.prodReadyFeatures.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,7 +8,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@ToString
 public class EmployeeDTO {
     private Long id;
     private String name;
